@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Результаты опроса</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+  }
+  .container {
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  h2 {
+    margin: 0 0 20px;
+  }
+  .question {
+    margin-bottom: 20px;
+  }
+  .question:last-child {
+    margin-bottom: 0;
+  }
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  .button {
+    display: inline-block;
+    text-decoration: none;
+    color: #007bff;
+    border: 2px solid #007bff;
+    border-radius: 5px;
+    padding: 7px 15px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  .button:hover {
+    background-color: #007bff;
+    color: #fff;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h2>Результаты опроса: {{.Theme}}</h2>
+  {{range $index, $question := .Questions}}
+  <div class="question">
+    <h3>{{add $index 1}} Вопрос: {{$question.Text}}</h3>
+    <p>Ответ: {{index $question.Answers (index $.Answers $index).ResponseIndex}}</p>
+  </div>
+  {{end}}
+  <div class="button-container">
+    <a href="/poll" class="button">Вернуться к опросу</a>
+    <a href="/" class="button">В главное меню</a>
+  </div>
+</div>
+</body>
+</html>

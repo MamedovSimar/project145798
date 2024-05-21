@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Прохождение опроса</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #333;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin: 5px 0;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Прохождение опроса: {{.Theme}}</h2>
+    <form action="/submit" method="post">
+        {{range $index, $question := .Questions}}
+        <div class="question">
+            <strong>{{add $index 1}} Вопрос: {{$question.Text}}</strong>
+            {{range $i, $answer := $question.Answers}}
+            <label><input type="radio" name="answers{{$index}}" value="{{$i}}" required>{{$answer}}</label>
+            {{end}}
+        </div>
+        {{end}}
+        <input type="submit" value="Отправить ответы">
+    </form>
+</div>
+</body>
+</html>

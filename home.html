@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Опрос</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+  }
+  .container {
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+  }
+  h1 {
+    margin: 0 0 20px;
+    font-size: 24px;
+    color: #333333;
+  }
+  .menu-link {
+    display: block;
+    margin-bottom: 20px;
+    padding: 30px;
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #007bff;
+    border: 10px solid #007bff;
+    border-radius: 20px;
+    transition: background-color 0.3s, color 0.3s;
+    text-align: center;
+  }
+  .menu-link:hover {
+    background-color: #0056b3;
+  }
+  .logout-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    text-decoration: none;
+    color: #007bff;
+    border: 2px solid #007bff;
+    border-radius: 5px;
+    padding: 7px 15px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  .logout-button:hover {
+    background-color: #007bff;
+    color: #fff;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <a href="/logout" class="logout-button">Выйти</a>
+  <h1>Добро пожаловать на страницу опросов, {{.Username}}!</h1>
+  <a href="/create" class="menu-link">Создать новый опрос</a>
+  <a href="/poll" class="menu-link">Пройти опрос</a>
+  <a href="/results" class="menu-link">Посмотреть результаты</a>
+</div>
+</body>
+</html>

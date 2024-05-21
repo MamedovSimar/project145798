@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Создание нового опроса</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f0f0f0;
+    }
+    .container {
+      width: 80%;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      margin: 0 0 20px;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      box-sizing: border-box;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+    }
+    .submit-button,
+    .menu-button {
+      display: inline-block;
+      text-decoration: none;
+      color: #007bff;
+      border: 2px solid #007bff;
+      border-radius: 5px;
+      padding: 7px 15px;
+      transition: background-color 0.3s, color 0.3s;
+      margin-right: 10px;
+      margin-bottom: 10px;
+      width: auto;
+      max-width: 150px;
+      font-size: 14px;
+    }
+    .submit-button:hover,
+    .menu-button:hover {
+      background-color: #007bff;
+      color: #fff;
+    }
+    .question {
+      margin-bottom: 20px;
+    }
+    .question:last-child {
+      margin-bottom: 0;
+    }
+    .question-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .question-controls .add,
+    .question-controls .remove {
+      display: inline-block;
+      width: 32px; /* уменьшенный размер */
+      height: 32px; /* уменьшенный размер */
+      border-radius: 50%;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+      font-size: 20px; /* уменьшенный размер шрифта */
+      text-align: center;
+      line-height: 32px; /* уменьшенный размер линии */
+      transition: background-color 0.3s;
+      margin: 5px;
+    }
+    .question-controls .remove {
+      background-color: #ff0000;
+    }
+    .question-controls .add:hover {
+      background-color: #0056b3;
+    }
+    .question-controls .remove:hover {
+      background-color: #cc0000;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h2>Создание нового опроса</h2>
+  <form action="/create" method="post" id="createPollForm">
+    <label for="theme">Тема опроса:</label>
+    <input type="text" id="theme" name="theme" required>
+    <div id="questionsContainer">
+      <div class="question">
+        <div class="question-controls">
+          <button type="button" class="add" onclick="addQuestion(this)">+</button>
+        </div>
+        <label for="question1">Вопрос:</label>
+        <input type="text" id="question1" name="question1" required>
+        <label for="answers1">Варианты ответа (разделите запятой):</label>
+        <input type="text" id="answers1" name="answers1" required>
+      </div>
+    </div>
+    <button type="submit" class="submit-button">Создать опрос</button>
+    <a href="/" class="menu-button">В главное меню</a>
+  </form>
+</div>
+
+<script>
+function addQuestion(button) {
+  const questionsContainer = document.getElementById('questionsContainer');
+  const questionCount = questionsContainer.getElementsByClassName('question').length + 1;
+
+  const newQuestionDiv = document.createElement('div');
+  newQuestionDiv.classList.add('question');
+
+  const newQuestionControls = document.createElement('div');
+  newQuestionControls.classList.add('question-controls');
+
+  const addButton = document.createElement('button');
+  addButton.type = 'button';
+  addButton.textContent = '+';
+  addButton.classList.add('add');
+  addButton.onclick = function() { addQuestion(this); };
+
+  const removeButton = document.createElement('button');
+  removeButton.type = 'button';
+  removeButton.textContent = '-';
+  removeButton.classList.add('remove');
+  removeButton.onclick = function() { removeQuestion(this); };
+
+  newQuestionControls.appendChild(addButton);
+  if (questionCount > 1) {
+    newQuestionControls.appendChild(removeButton);
+  }
+
+  const newQuestionLabel = document.createElement('label');
+  newQuestionLabel.htmlFor = `question${questionCount}`;
+  newQuestionLabel.textContent = `Вопрос ${questionCount}:`;
+
+  const newQuestionInput = document.createElement('input');
+  newQuestionInput.type = 'text';
+  newQuestionInput.id = `question${questionCount}`;
+  newQuestionInput.name = `question${questionCount}`;
+  newQuestionInput.required = true;
+
+  const newAnswerLabel = document.createElement('label');
+  newAnswerLabel.htmlFor = `answers${questionCount}`;
+  newAnswerLabel.textContent = 'Варианты ответа (разделите запятой):';
+
+  const newAnswerInput = document.createElement('input');
+  newAnswerInput.type = 'text';
+  newAnswerInput.id = `answers${questionCount}`;
+  newAnswerInput.name = `answers${questionCount}`;
+  newAnswerInput.required = true;
+
+  newQuestionDiv.appendChild(newQuestionControls);
+  newQuestionDiv.appendChild(newQuestionLabel);
+  newQuestionDiv.appendChild(newQuestionInput);
+  newQuestionDiv.appendChild(newAnswerLabel);
+  newQuestionDiv.appendChild(newAnswerInput);
+
+  questionsContainer.appendChild(newQuestionDiv);
+}
+
+function removeQuestion(button) {
+  const questionDiv = button.parentElement.parentElement;
+  questionDiv.remove();
+}
+</script>
+</body>
+</html>
